@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunora | So sánh Desktop và Mobile</title>
+  <link rel="icon" type="image/png" href="assets/sunora-logo-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Cormorant:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --moss: #32482C; --cream: #F9F7F2; --blue: #5C9FD4;
+      --ink: #2C3327; --muted: #6B7468; --line: #E4E1D7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: "Be Vietnam Pro", system-ui, sans-serif;
+      background: var(--cream); color: var(--ink); padding: 28px 20px 60px;
+    }
+    .page-head { max-width: 1200px; margin: 0 auto 26px; text-align: center; }
+    .page-head h1 {
+      font-family: "Cormorant", "Be Vietnam Pro", system-ui, serif;
+      color: var(--moss); font-size: 2.2rem; margin: 0 0 8px;
+    }
+    .page-head p { color: var(--muted); margin: 0 auto; max-width: 640px; }
+    .page-head a { color: var(--blue); }
+
+    .stage {
+      display: flex; flex-wrap: wrap; gap: 40px;
+      align-items: flex-start; justify-content: center;
+    }
+    .device { text-align: center; }
+    .device__label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 600; color: var(--moss); margin-bottom: 12px;
+    }
+    .device__label span {
+      font-weight: 500; color: var(--muted); font-size: .85rem;
+    }
+    .screen {
+      background: #fff; border: 1px solid var(--line); border-radius: 16px;
+      overflow: hidden; box-shadow: 0 18px 50px rgba(44, 51, 39, .16);
+    }
+    .screen iframe { border: 0; display: block; }
+
+    /* Desktop: nhúng trang ở khổ 1280px rồi thu nhỏ để vừa màn trình chiếu */
+    .desktop .screen { width: calc(1280px * 0.58); height: calc(1640px * 0.58); }
+    .desktop iframe {
+      width: 1280px; height: 1640px;
+      transform: scale(0.58); transform-origin: top left;
+    }
+
+    /* Mobile: khung 390px như điện thoại, không thu nhỏ */
+    .phone .screen {
+      width: 390px; height: 780px; border-radius: 30px; padding: 10px;
+      background: #1c241a;
+    }
+    .phone iframe { width: 370px; height: 760px; border-radius: 22px; background: #fff; }
+
+    .legend {
+      max-width: 1200px; margin: 36px auto 0; padding: 18px 22px;
+      background: #fff; border: 1px solid var(--line); border-radius: 14px;
+      color: var(--muted); font-size: .92rem; line-height: 1.6;
+    }
+    .legend strong { color: var(--moss); }
+  </style>
+</head>
+<body>
+  <header class="page-head">
+    <h1>Sunora: Desktop và Mobile cạnh nhau</h1>
+    <p>Cùng một file <a href="index.html" target="_blank" rel="noopener">index.html</a>, hai khung mô phỏng hai thiết bị. Dùng để trình bày trực tiếp khác biệt responsive trước lớp.</p>
+  </header>
+
+  <div class="stage">
+    <section class="device desktop">
+      <div class="device__label">Desktop <span>(khung 1280px, thu nhỏ 58%)</span></div>
+      <div class="screen"><iframe src="index.html" title="Sunora bản desktop" loading="lazy"></iframe></div>
+    </section>
+
+    <section class="device phone">
+      <div class="device__label">Mobile <span>(khung 390px)</span></div>
+      <div class="screen"><iframe src="index.html" title="Sunora bản mobile" loading="lazy"></iframe></div>
+    </section>
+  </div>
+
+  <p class="legend">
+    <strong>Gợi ý khi trình bày:</strong> chỉ vào từng khác biệt theo bảng trong
+    <strong>responsive-notes.md</strong>: menu ngang so với hamburger, hero 2 cột ảnh ngang so với xếp dọc ảnh đứng,
+    lưới sản phẩm 3 cột so với 1 cột, cỡ tiêu đề lớn so với nhỏ, nút trong hàng so với nút full width,
+    và footer nhiều cột so với xếp dọc. Nếu khung desktop bị cắt, mở thẳng
+    <strong>index.html</strong> rồi kéo rộng hoặc thu hẹp cửa sổ trình duyệt để xem trang tự đổi bố cục.
+  </p>
+</body>
+</html>

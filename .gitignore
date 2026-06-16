@@ -1,0 +1,19 @@
+# macOS / OS temp files
+.DS_Store
+**/.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Tooling / editor
+.claude/
+node_modules/
+*.log
+*.tmp
+*.swp
+
+# Archives / source bundles (do not publish)
+*.zip
