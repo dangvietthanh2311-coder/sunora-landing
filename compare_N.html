@@ -50,9 +50,9 @@
     .page-head a { color: var(--blue-dark); font-weight: 600; }
 
     /* --------------------------- Mỗi hàng so sánh ------------------------ */
-    /* Đủ rộng để khung desktop (966px) và mobile (574px) đứng cạnh nhau trên màn
-       chiếu rộng; màn hẹp hơn sẽ tự xuống dòng (khung mobile xuống dưới desktop). */
-    .cmp { max-width: 1620px; margin: 0 auto 52px; }
+    /* Đủ rộng để khung desktop (966px) và mobile (650px) đứng cạnh nhau trên màn
+       chiếu rộng (1920); màn hẹp hơn sẽ tự xuống dòng (khung mobile xuống dưới desktop). */
+    .cmp { max-width: 1700px; margin: 0 auto 52px; }
     .cmp + .cmp { padding-top: 40px; border-top: 1px dashed var(--line); }
 
     .cmp__head { max-width: 1180px; margin: 0 auto 20px; }
@@ -71,10 +71,12 @@
     .cmp__pairs .sep { color: var(--muted); font-weight: 700; padding: 0 2px; }
 
     /* Hàng 1 có 4 chip cặp: xếp lưới 2x2 thẳng cột theo thứ tự 1,2,3,4 (1,2 trên; 3,4 dưới).
+       Cột đủ rộng để chip dài nhất (1 và 4) nằm gọn một dòng trên màn rộng; màn hẹp tự wrap.
        Hàng 2 và 3 chỉ có 1 chip nên giữ canh giữa theo .cmp__pairs gốc (flex center). */
+    .stage-hero .cmp__head { max-width: 1300px; }
     .stage-hero .cmp__pairs {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-      max-width: 960px; margin-inline: auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      max-width: 1300px; margin-inline: auto;
     }
     .stage-hero .cmp__pairs li { max-width: none; }
 
@@ -86,7 +88,7 @@
     }
 
     /* --------------------------- Sân khấu 2 khung ------------------------ */
-    .stage { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; justify-content: center; }
+    .stage { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; justify-content: center; }
     .device { text-align: center; }
     /* Nhãn phải nằm TRÊN khung (block-level), không nằm cạnh, nếu không thì khung
        desktop và mobile cộng nhãn sẽ quá rộng và bị xuống dòng. */
@@ -107,7 +109,7 @@
     .desktop iframe { width: var(--w); height: var(--h); transform: scale(var(--scale)); transform-origin: top left; }
 
     /* Khung MOBILE: viền điện thoại, iframe rộng 370px */
-    .phone { --pw: 390px; --ph: 780px; --pad: 10px; --gut: 120px; }
+    .phone { --pw: 390px; --ph: 780px; --pad: 10px; --gut: 130px; }
     .phone .screen { width: var(--pw); height: var(--ph); border-radius: 30px; padding: var(--pad); background: #1c241a; }
     .phone iframe { width: calc(var(--pw) - var(--pad) * 2); height: calc(var(--ph) - var(--pad) * 2); border-radius: 22px; background: #fff; }
 
@@ -121,7 +123,7 @@
 
     /* --------------------------- Callout (ngoài khung) ------------------- */
     .callout {
-      --lead: 11px;   /* khoảng chip lùi khỏi mép khung, chừa chỗ cho mũi tên + khoảng thở */
+      --lead: 20px;   /* khoảng chip lùi khỏi mép khung, chừa chỗ cho mũi tên + khoảng thở rõ (khoảng 14px) */
       position: absolute; z-index: 6; pointer-events: none;
       display: inline-flex; align-items: center; gap: 5px;
       width: max-content; max-width: calc(var(--gut) - var(--lead) - 2px); text-align: left;
