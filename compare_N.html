@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunora | So sánh Desktop và Mobile</title>
+  <link rel="icon" type="image/png" href="assets/sunora-logo-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Cormorant:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =====================================================================
+       SUNORA  |  Trang so sánh Desktop vs Mobile (chiếu trước lớp)
+       ---------------------------------------------------------------------
+       CƠ CHẾ (giữ nguyên):
+         - Khung desktop: iframe rộng 1280px (kích hoạt layout desktop) rồi
+           transform: scale(0.58) cho vừa màn chiếu.
+         - Khung mobile : iframe rộng 370px (kích hoạt layout mobile), 1:1.
+         - Media query trong index.html phản ứng theo CHIỀU RỘNG iframe, nên mỗi
+           khung tự chạy đúng bố cục thiết bị.
+         - Hàng 2 và 3 cuộn iframe tới đúng phần (#san-pham, #lien-he) bằng JS
+           same-origin (chạy khi mở qua local server). Mở bằng file:// thì dựa
+           vào #hash trong src và chiều cao khung đã canh sẵn.
+
+       NHÃN CALLOUT:
+         - Mọi nhãn nằm NGOÀI khung, trong dải lề trái (lg) hoặc phải (rg), nên
+           không bao giờ đè lên nội dung. Mũi tên ngắn trỏ vào mép khung gần điểm.
+         - Toàn bộ TỌA ĐỘ NHÃN gom trong khối "VỊ TRÍ NHÃN" ở cuối phần CSS.
+       ===================================================================== */
+
+    :root {
+      --moss: #32482C; --moss-dark: #28381F;
+      --cream: #F9F7F2; --blue: #5C9FD4; --blue-dark: #4A89BC;
+      --ink: #2C3327; --muted: #6B7468; --line: #E4E1D7;
+      --head: "Cormorant", "Be Vietnam Pro", system-ui, serif;
+      --body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: var(--body);
+      background: var(--cream); color: var(--ink);
+      padding: 28px 20px 64px; line-height: 1.55;
+    }
+
+    /* --------------------------- Đầu trang ------------------------------- */
+    .page-head { max-width: 1200px; margin: 0 auto 30px; text-align: center; }
+    .page-head h1 { font-family: var(--head); color: var(--moss); font-size: 2.3rem; margin: 0 0 10px; line-height: 1.1; }
+    .page-head p { color: var(--muted); margin: 0 auto; max-width: 760px; }
+    .page-head a { color: var(--blue-dark); font-weight: 600; }
+
+    /* --------------------------- Mỗi hàng so sánh ------------------------ */
+    /* Đủ rộng để khung desktop (966px) và mobile (574px) đứng cạnh nhau trên màn
+       chiếu rộng; màn hẹp hơn sẽ tự xuống dòng (khung mobile xuống dưới desktop). */
+    .cmp { max-width: 1620px; margin: 0 auto 52px; }
+    .cmp + .cmp { padding-top: 40px; border-top: 1px dashed var(--line); }
+
+    .cmp__head { max-width: 1180px; margin: 0 auto 20px; }
+    .cmp__head h2 { font-family: var(--head); color: var(--moss); font-size: 1.65rem; margin: 0 0 4px; text-align: center; }
+    .cmp__head .cmp__sub { text-align: center; color: var(--muted); font-size: .92rem; margin: 0 0 14px; }
+
+    /* Bảng cặp "desktop  ↔  mobile" (đây là phần chữ chính, đọc rõ khi chiếu) */
+    .cmp__pairs { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .cmp__pairs li {
+      background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--blue);
+      border-radius: 11px; padding: 9px 14px; font-size: 13.5px; color: var(--ink);
+      max-width: 580px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+    }
+    .cmp__pairs .pc { color: var(--moss); font-weight: 600; }
+    .cmp__pairs .mb { color: var(--blue-dark); font-weight: 600; }
+    .cmp__pairs .sep { color: var(--muted); font-weight: 700; padding: 0 2px; }
+
+    /* Huy hiệu số (bảng + callout dùng chung) */
+    .tag {
+      flex: 0 0 auto; width: 19px; height: 19px; border-radius: 50%;
+      background: var(--blue); color: #fff; font-size: 11px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+    }
+
+    /* --------------------------- Sân khấu 2 khung ------------------------ */
+    .stage { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; justify-content: center; }
+    .device { text-align: center; }
+    /* Nhãn phải nằm TRÊN khung (block-level), không nằm cạnh, nếu không thì khung
+       desktop và mobile cộng nhãn sẽ quá rộng và bị xuống dòng. */
+    .device__label { display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: 600; color: var(--moss); margin-bottom: 12px; }
+    .device__label span { font-weight: 500; color: var(--muted); font-size: .85rem; }
+
+    /* .frame có dải lề hai bên (--gut) để chứa nhãn; .screen mới là khung cắt. */
+    .frame { position: relative; display: inline-block; line-height: 0; padding: 0 var(--gut); }
+    .screen {
+      background: #fff; border: 1px solid var(--line); border-radius: 16px;
+      overflow: hidden; box-shadow: 0 18px 50px rgba(44, 51, 39, .16);
+    }
+    .screen iframe { border: 0; display: block; }
+
+    /* Khung DESKTOP: nhúng 1280px rồi thu nhỏ 58% */
+    .desktop { --scale: 0.58; --w: 1280px; --h: 1640px; --gut: 112px; }
+    .desktop .screen { width: calc(var(--w) * var(--scale)); height: calc(var(--h) * var(--scale)); }
+    .desktop iframe { width: var(--w); height: var(--h); transform: scale(var(--scale)); transform-origin: top left; }
+
+    /* Khung MOBILE: viền điện thoại, iframe rộng 370px */
+    .phone { --pw: 390px; --ph: 780px; --pad: 10px; --gut: 92px; }
+    .phone .screen { width: var(--pw); height: var(--ph); border-radius: 30px; padding: var(--pad); background: #1c241a; }
+    .phone iframe { width: calc(var(--pw) - var(--pad) * 2); height: calc(var(--ph) - var(--pad) * 2); border-radius: 22px; background: #fff; }
+
+    /* Chiều cao riêng từng hàng (lộ đúng phần cần so sánh) */
+    .stage-hero     .desktop { --h: 980px; }
+    .stage-hero     .phone   { --ph: 860px; }
+    .stage-products .desktop { --h: 1200px; }
+    .stage-products .phone   { --ph: 860px; }
+    .stage-footer   .desktop { --h: 470px; }
+    .stage-footer   .phone   { --ph: 760px; }
+
+    /* --------------------------- Callout (ngoài khung) ------------------- */
+    .callout {
+      position: absolute; z-index: 6; pointer-events: none;
+      display: inline-flex; align-items: center; gap: 5px;
+      width: max-content; max-width: calc(var(--gut) - 6px); text-align: left;
+      font-size: 12px; font-weight: 700; line-height: 1.2; color: var(--moss);
+      background: #fff; border: 2px solid var(--blue); border-radius: 10px;
+      padding: 5px 8px; box-shadow: 0 6px 16px rgba(44, 51, 39, .22);
+    }
+    /* lg = lề trái, mép phải nhãn sát mép trái màn, mũi tên trỏ phải vào màn */
+    .callout.lg { right: calc(100% - var(--gut) + 2px); left: auto; }
+    /* rg = lề phải, mép trái nhãn sát mép phải màn, mũi tên trỏ trái vào màn */
+    .callout.rg { left: calc(100% - var(--gut) + 2px); right: auto; }
+
+    .callout::after { content: ""; position: absolute; top: 50%; width: 0; height: 0; }
+    .callout.lg::after { right: -9px; transform: translateY(-50%); border: 7px solid transparent; border-left-color: var(--blue); }
+    .callout.rg::after { left: -9px;  transform: translateY(-50%); border: 7px solid transparent; border-right-color: var(--blue); }
+
+    /* --------------------------- Ghi chú cuối trang ---------------------- */
+    .legend {
+      max-width: 1180px; margin: 4px auto 0; padding: 18px 22px;
+      background: #fff; border: 1px solid var(--line); border-radius: 14px;
+      color: var(--muted); font-size: .92rem; line-height: 1.65;
+    }
+    .legend strong { color: var(--moss); }
+    .legend a { color: var(--blue-dark); font-weight: 600; }
+
+    /* =====================================================================
+       VỊ TRÍ NHÃN  (CHỈNH Ở ĐÂY)
+       top = px trong KHUNG ĐÃ HIỂN THỊ. Desktop đã thu nhỏ 0.58 (1px khung
+       desktop = ~1.72px nội dung gốc). Mobile 1:1. lg/rg đặt ở class trong HTML.
+       ===================================================================== */
+    /* Hàng 1 desktop (canh theo vị trí thật đo trong khung) */
+    #r1d1 { top: 4px; }     /* Menu ngang (rg) -> thanh menu */
+    #r1d3 { top: 186px; }   /* Tiêu đề lớn (lg) -> tiêu đề hero */
+    #r1d2 { top: 249px; }   /* Ảnh bên phải (rg) -> ảnh người mẫu */
+    #r1d4 { top: 311px; }   /* Nút trong hàng (lg) -> cụm nút CTA */
+    /* Hàng 1 mobile */
+    #r1m1 { top: 16px; max-width: none; white-space: nowrap; }   /* Hamburger (rg): cho hiện đủ một dòng, không cắt */
+    #r1m2 { top: 276px; }   /* Xếp dọc (lg) -> ảnh nằm trên */
+    #r1m3 { top: 557px; }   /* Tiêu đề nhỏ (lg) */
+    #r1m4 { top: 762px; }   /* Nút full (rg) */
+    /* Hàng 2 */
+    #r2d5 { top: 424px; }   /* 3 cột (lg) -> hàng 3 card */
+    #r2m5 { top: 600px; }   /* 1 cột (rg) -> card đơn */
+    /* Hàng 3 */
+    #r3d6 { top: 145px; }   /* Nhiều cột (lg) -> 4 cột footer */
+    #r3m6 { top: 384px; }   /* Xếp dọc (rg) -> khối footer dọc */
+
+    /* Màn hẹp: hai khung tự xuống dòng cho gọn */
+    @media (max-width: 1024px) {
+      .stage { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-head">
+    <h1>Sunora: Desktop và Mobile cạnh nhau</h1>
+    <p>Cùng một file <a href="index.html" target="_blank" rel="noopener">index.html</a> nhúng nhiều lần.
+       Mỗi hàng đặt khung desktop (1280px, thu nhỏ 58%) cạnh khung mobile (370px). Bảng phía trên mỗi hàng ghi
+       cặp khác biệt theo dạng "desktop ↔ mobile"; nhãn số trên khung trỏ thẳng vào điểm khác biệt. Lý do trình
+       bày miệng theo responsive-notes.md.</p>
+  </header>
+
+  <!-- ===================== HÀNG 1: HEADER + HERO ===================== -->
+  <section class="cmp stage-hero">
+    <div class="cmp__head">
+      <h2>Hàng 1 · Header và Hero</h2>
+      <p class="cmp__sub">Phần đầu trang: thanh điều hướng và khối mở đầu.</p>
+      <ul class="cmp__pairs">
+        <li><span class="tag">1</span> <span class="pc">Menu ngang: 5 mục + nút Mua ngay</span> <span class="sep">↔</span> <span class="mb">chỉ logo và hamburger, bấm mới xổ</span></li>
+        <li><span class="tag">2</span> <span class="pc">Hero 2 cột: chữ trái, ảnh phải</span> <span class="sep">↔</span> <span class="mb">xếp dọc: ảnh trên, chữ dưới</span></li>
+        <li><span class="tag">3</span> <span class="pc">Tiêu đề lớn, khoảng 54px</span> <span class="sep">↔</span> <span class="mb">tiêu đề nhỏ, khoảng 31px</span></li>
+        <li><span class="tag">4</span> <span class="pc">Nút CTA nằm ngang, rộng theo nội dung</span> <span class="sep">↔</span> <span class="mb">nút xếp dọc, rộng hết khổ</span></li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <section class="device desktop">
+        <div class="device__label">Desktop <span>(khung 1280px, thu nhỏ 58%)</span></div>
+        <div class="frame">
+          <div class="screen"><iframe src="index.html" title="Sunora desktop: header và hero"></iframe></div>
+          <span class="callout rg" id="r1d1"><span class="tag">1</span> Menu ngang</span>
+          <span class="callout lg" id="r1d3"><span class="tag">3</span> Tiêu đề lớn</span>
+          <span class="callout lg" id="r1d4"><span class="tag">4</span> Nút trong hàng</span>
+          <span class="callout rg" id="r1d2"><span class="tag">2</span> Ảnh bên phải</span>
+        </div>
+      </section>
+
+      <section class="device phone">
+        <div class="device__label">Mobile <span>(khung 370px)</span></div>
+        <div class="frame">
+          <div class="screen"><iframe src="index.html" title="Sunora mobile: header và hero"></iframe></div>
+          <span class="callout rg" id="r1m1"><span class="tag">1</span> Hamburger</span>
+          <span class="callout lg" id="r1m2"><span class="tag">2</span> Xếp dọc</span>
+          <span class="callout lg" id="r1m3"><span class="tag">3</span> Tiêu đề nhỏ</span>
+          <span class="callout rg" id="r1m4"><span class="tag">4</span> Nút full</span>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ===================== HÀNG 2: LƯỚI SẢN PHẨM ===================== -->
+  <section class="cmp stage-products">
+    <div class="cmp__head">
+      <h2>Hàng 2 · Lưới sản phẩm</h2>
+      <p class="cmp__sub">Hai khung cuộn tới phần Bộ sưu tập Sunora (#san-pham).</p>
+      <ul class="cmp__pairs">
+        <li><span class="tag">5</span> <span class="pc">Lưới sản phẩm 3 cột mỗi hàng</span> <span class="sep">↔</span> <span class="mb">1 cột, các card xếp dọc</span></li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <section class="device desktop">
+        <div class="device__label">Desktop <span>(khung 1280px, thu nhỏ 58%)</span></div>
+        <div class="frame">
+          <div class="screen"><iframe src="index.html#san-pham" data-scroll="#san-pham" title="Sunora desktop: lưới sản phẩm 3 cột"></iframe></div>
+          <span class="callout lg" id="r2d5"><span class="tag">5</span> 3 cột</span>
+        </div>
+      </section>
+
+      <section class="device phone">
+        <div class="device__label">Mobile <span>(khung 370px)</span></div>
+        <div class="frame">
+          <div class="screen"><iframe src="index.html#san-pham" data-scroll="#san-pham" title="Sunora mobile: lưới sản phẩm 1 cột"></iframe></div>
+          <span class="callout rg" id="r2m5"><span class="tag">5</span> 1 cột</span>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ===================== HÀNG 3: FOOTER ===================== -->
+  <section class="cmp stage-footer">
+    <div class="cmp__head">
+      <h2>Hàng 3 · Footer</h2>
+      <p class="cmp__sub">Hai khung cuộn tới phần chân trang (#lien-he).</p>
+      <ul class="cmp__pairs">
+        <li><span class="tag">6</span> <span class="pc">Footer nhiều cột ngang</span> <span class="sep">↔</span> <span class="mb">các khối thông tin xếp dọc</span></li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <section class="device desktop">
+        <div class="device__label">Desktop <span>(khung 1280px, thu nhỏ 58%)</span></div>
+        <div class="frame">
+          <div class="screen"><iframe src="index.html#lien-he" data-scroll="#lien-he" title="Sunora desktop: footer nhiều cột"></iframe></div>
+          <span class="callout lg" id="r3d6"><span class="tag">6</span> Nhiều cột</span>
+        </div>
+      </section>
+
+      <section class="device phone">
+        <div class="device__label">Mobile <span>(khung 370px)</span></div>
+        <div class="frame">
+          <div class="screen"><iframe src="index.html#lien-he" data-scroll="#lien-he" title="Sunora mobile: footer xếp dọc"></iframe></div>
+          <span class="callout rg" id="r3m6"><span class="tag">6</span> Xếp dọc</span>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <p class="legend">
+    <strong>Khi trình bày:</strong> đọc cặp khác biệt theo bảng số trên mỗi hàng (1 tới 4 cho header và hero,
+    5 cho lưới sản phẩm, 6 cho footer), rồi chỉ vào nhãn cùng số ở hai khung. Lý do (không gian màn hình,
+    chạm so với chuột, tốc độ tải) trình bày miệng theo <strong>responsive-notes.md</strong>.
+    Nên mở trang này qua local server (ví dụ <strong>python3 -m http.server</strong>) để hai khung tự cuộn đúng phần.
+    Cách khác: mở thẳng <a href="index.html" target="_blank" rel="noopener">index.html</a> rồi kéo rộng hoặc thu hẹp
+    cửa sổ để xem trang tự đổi bố cục qua mốc 769px và 600px.
+  </p>
+
+  <script>
+    /* Cuộn iframe có data-scroll tới đúng phần, trừ chiều cao header dính (~64px).
+       Same-origin nên chạy khi mở qua local server. file:// có thể chặn, khi đó
+       dựa vào #hash trong src và chiều cao khung đã canh sẵn. */
+    (function () {
+      var HEADER = 64;
+      function place(f) {
+        var sel = f.getAttribute('data-scroll');
+        if (!sel) return;
+        try {
+          var w = f.contentWindow, d = w.document;
+          var el = d.querySelector(sel);
+          if (!el) return;
+          d.documentElement.style.scrollBehavior = 'auto';
+          w.scrollTo(0, 0);
+          var y = el.getBoundingClientRect().top - HEADER - 6;
+          w.scrollTo(0, Math.max(0, y));
+        } catch (e) { /* file:// chặn DOM iframe: dựa vào #hash */ }
+      }
+      function hook(f) {
+        f.addEventListener('load', function () {
+          place(f);
+          setTimeout(function () { place(f); }, 350);
+          setTimeout(function () { place(f); }, 900);
+        });
+      }
+      document.querySelectorAll('iframe[data-scroll]').forEach(hook);
+      window.addEventListener('resize', function () {
+        document.querySelectorAll('iframe[data-scroll]').forEach(place);
+      });
+      /* #hash trong src của iframe có thể khiến TRANG CHA tự cuộn xuống khi tải.
+         Ghim trang cha về đầu trong ~1.6s đầu để luôn mở ra từ phần đầu. */
+      function pinTop(){
+        var n = 0;
+        var id = setInterval(function () { window.scrollTo(0, 0); if (++n > 7) clearInterval(id); }, 200);
+      }
+      window.addEventListener('load', pinTop);
+      pinTop();
+    })();
+  </script>
+
+</body>
+</html>
