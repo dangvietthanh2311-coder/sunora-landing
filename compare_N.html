@@ -70,6 +70,14 @@
     .cmp__pairs .mb { color: var(--blue-dark); font-weight: 600; }
     .cmp__pairs .sep { color: var(--muted); font-weight: 700; padding: 0 2px; }
 
+    /* Hàng 1 có 4 chip cặp: xếp lưới 2x2 thẳng cột theo thứ tự 1,2,3,4 (1,2 trên; 3,4 dưới).
+       Hàng 2 và 3 chỉ có 1 chip nên giữ canh giữa theo .cmp__pairs gốc (flex center). */
+    .stage-hero .cmp__pairs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      max-width: 960px; margin-inline: auto;
+    }
+    .stage-hero .cmp__pairs li { max-width: none; }
+
     /* Huy hiệu số (bảng + callout dùng chung) */
     .tag {
       flex: 0 0 auto; width: 19px; height: 19px; border-radius: 50%;
@@ -78,7 +86,7 @@
     }
 
     /* --------------------------- Sân khấu 2 khung ------------------------ */
-    .stage { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; justify-content: center; }
+    .stage { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; justify-content: center; }
     .device { text-align: center; }
     /* Nhãn phải nằm TRÊN khung (block-level), không nằm cạnh, nếu không thì khung
        desktop và mobile cộng nhãn sẽ quá rộng và bị xuống dòng. */
@@ -99,7 +107,7 @@
     .desktop iframe { width: var(--w); height: var(--h); transform: scale(var(--scale)); transform-origin: top left; }
 
     /* Khung MOBILE: viền điện thoại, iframe rộng 370px */
-    .phone { --pw: 390px; --ph: 780px; --pad: 10px; --gut: 92px; }
+    .phone { --pw: 390px; --ph: 780px; --pad: 10px; --gut: 120px; }
     .phone .screen { width: var(--pw); height: var(--ph); border-radius: 30px; padding: var(--pad); background: #1c241a; }
     .phone iframe { width: calc(var(--pw) - var(--pad) * 2); height: calc(var(--ph) - var(--pad) * 2); border-radius: 22px; background: #fff; }
 
@@ -113,21 +121,23 @@
 
     /* --------------------------- Callout (ngoài khung) ------------------- */
     .callout {
+      --lead: 11px;   /* khoảng chip lùi khỏi mép khung, chừa chỗ cho mũi tên + khoảng thở */
       position: absolute; z-index: 6; pointer-events: none;
       display: inline-flex; align-items: center; gap: 5px;
-      width: max-content; max-width: calc(var(--gut) - 6px); text-align: left;
+      width: max-content; max-width: calc(var(--gut) - var(--lead) - 2px); text-align: left;
       font-size: 12px; font-weight: 700; line-height: 1.2; color: var(--moss);
       background: #fff; border: 2px solid var(--blue); border-radius: 10px;
       padding: 5px 8px; box-shadow: 0 6px 16px rgba(44, 51, 39, .22);
     }
-    /* lg = lề trái, mép phải nhãn sát mép trái màn, mũi tên trỏ phải vào màn */
-    .callout.lg { right: calc(100% - var(--gut) + 2px); left: auto; }
-    /* rg = lề phải, mép trái nhãn sát mép phải màn, mũi tên trỏ trái vào màn */
-    .callout.rg { left: calc(100% - var(--gut) + 2px); right: auto; }
+    /* lg = lề trái, nhãn lùi khỏi mép trái màn một khoảng --lead, mũi tên trỏ phải */
+    .callout.lg { right: calc(100% - var(--gut) + var(--lead)); left: auto; }
+    /* rg = lề phải, nhãn lùi khỏi mép phải màn một khoảng --lead, mũi tên trỏ trái */
+    .callout.rg { left: calc(100% - var(--gut) + var(--lead)); right: auto; }
 
+    /* Mũi tên dài hơn một chút và chừa khoảng thở khoảng 5px tới mép khung */
     .callout::after { content: ""; position: absolute; top: 50%; width: 0; height: 0; }
-    .callout.lg::after { right: -9px; transform: translateY(-50%); border: 7px solid transparent; border-left-color: var(--blue); }
-    .callout.rg::after { left: -9px;  transform: translateY(-50%); border: 7px solid transparent; border-right-color: var(--blue); }
+    .callout.lg::after { right: -14px; transform: translateY(-50%); border: 8px solid transparent; border-left-color: var(--blue); }
+    .callout.rg::after { left: -14px;  transform: translateY(-50%); border: 8px solid transparent; border-right-color: var(--blue); }
 
     /* --------------------------- Ghi chú cuối trang ---------------------- */
     .legend {
