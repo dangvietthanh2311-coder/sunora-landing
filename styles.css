@@ -358,6 +358,8 @@ h1, h2, h3 { line-height: 1.15; }
 
 /* ----------------------------- 10. Why ---------------------------------- */
 .why__inner { display: grid; gap: 28px; }
+/* H2 khối why luôn ngắt 2 dòng cân: "Không chỉ chống nắng," / "mà là phong cách mỗi ngày" */
+.why__title-line2 { display: block; }
 /* Ảnh áo cut-out nền trong suốt: không khung, không crop; bóng đổ theo
    silhouette cho áo bám nền. Mobile: ảnh đứng cuối khối, căn giữa. */
 .why__media { display: flex; justify-content: center; }
