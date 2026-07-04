@@ -208,19 +208,9 @@ h1, h2, h3 { line-height: 1.15; }
 /* Hiện video từ 768px, khớp mốc matchMedia gán src trong script.js */
 @media (min-width: 768px) {
   .hero__video { display: block; }
+  /* Câu 2 của phụ đề luôn bắt đầu dòng mới trên desktop */
+  .hero__sub-more { display: block; }
 }
-/* Mobile: nền hero dùng ảnh DỌC riêng và gradient thay cho lớp overlay phẳng,
-   chữ trắng vẫn rõ trên nền trời sáng mà ảnh không bị xỉn vì chồng 2 lớp.
-   Người mẫu nằm 1/3 phải khung nên neo background lệch phải (75%). */
-@media (max-width: 767px) {
-  .hero {
-    background: linear-gradient(180deg, rgba(21, 30, 17, .5), rgba(21, 30, 17, .2) 55%, rgba(21, 30, 17, .4)),
-                var(--moss) url("assets/hero-master-mobile.jpg") 75% 50% / cover no-repeat;
-  }
-  .hero__bg::after { background: none; }   /* tắt overlay phẳng của desktop */
-  .hero__sub-more { display: none; }       /* mobile chỉ giữ câu đầu phụ đề */
-}
-
 .hero__inner { position: relative; z-index: 1; padding-block: 64px 74px; }
 .hero__copy { max-width: 640px; }
 
@@ -239,6 +229,24 @@ h1, h2, h3 { line-height: 1.15; }
 .hero__actions .btn { width: 100%; }   /* mobile: nút full-width */
 
 .hero__note { margin: 14px 0 0; font-size: .85rem; color: rgba(255, 255, 255, .88); }
+
+/* Mobile: nền hero dùng ảnh DỌC riêng và gradient thay cho lớp overlay phẳng,
+   chữ trắng vẫn rõ trên nền trời sáng mà ảnh không bị xỉn vì chồng 2 lớp.
+   Người mẫu nằm 1/3 phải khung nên neo background lệch phải (75%).
+   Khối này đặt CUỐI phần hero để thắng các rule base cùng specificity ở trên
+   (ví dụ max-width 34em của .hero__sub). */
+@media (max-width: 767px) {
+  .hero {
+    background: linear-gradient(180deg, rgba(21, 30, 17, .5), rgba(21, 30, 17, .2) 55%, rgba(21, 30, 17, .4)),
+                var(--moss) url("assets/hero-master-mobile.jpg") 75% 50% / cover no-repeat;
+  }
+  .hero__bg::after { background: none; }   /* tắt overlay phẳng của desktop */
+  .hero__sub-more { display: none; }       /* mobile chỉ giữ câu đầu phụ đề */
+  .hero__badge-more { display: none; }     /* mobile rút gọn badge, bỏ "toàn shop" */
+  .hero__sub-line2 { display: block; }     /* phụ đề ngắt dòng sau "mát lạnh," */
+  /* Chữ không lấn sang mặt người mẫu (mặt quanh 75% ngang khung) */
+  .hero__badge, .hero__sub { max-width: 63%; }
+}
 
 /* ----------------------------- 6. Problems ------------------------------ */
 .problems__grid { display: grid; gap: 16px; margin-top: 26px; }
