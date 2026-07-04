@@ -17,3 +17,6 @@ node_modules/
 
 # Archives / source bundles (do not publish)
 *.zip
+
+# Session resume notes (local only)
+RESUME.md
