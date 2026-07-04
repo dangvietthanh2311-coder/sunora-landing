@@ -77,4 +77,20 @@
       btn.setAttribute("aria-pressed", "true");
     });
   });
+
+  /* ---------- 4. Video nền hero (chỉ màn rộng) ---------- */
+  /* Video trong HTML không có src. Chỉ gán src khi màn từ 768px trở lên và
+     người dùng không tắt hiệu ứng chuyển động, nên điện thoại không bao giờ
+     tải file mp4, hero mobile dùng ảnh tĩnh làm nền. */
+  var heroVideo = document.getElementById("heroVideo");
+  if (
+    heroVideo &&
+    window.matchMedia("(min-width: 768px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    heroVideo.muted = true;
+    heroVideo.src = heroVideo.getAttribute("data-src");
+    var playAttempt = heroVideo.play();
+    if (playAttempt && playAttempt.catch) playAttempt.catch(function () {});
+  }
 })();
