@@ -35,7 +35,7 @@
 
   /* Cỡ chữ + khoảng cách: đặt giá trị MOBILE ở đây, desktop ghi đè bên dưới.
      Đây là một trong các khác biệt chính giữa hai phiên bản. */
-  --fs-h1: 1.95rem;       /* hero title  ~31px mobile */
+  --fs-h1: 2.15rem;       /* hero title  ~34px mobile */
   --fs-h2: 1.55rem;       /* section title ~25px mobile */
   --fs-lead: 1rem;
   --section-pad: 46px;    /* khoảng cách dọc giữa các section */
@@ -203,7 +203,8 @@ h1, h2, h3 { line-height: 1.15; }
 }
 .hero__bg::after {
   content: ""; position: absolute; inset: 0;
-  background: rgba(21, 30, 17, .4);
+  /* Desktop: tối phía chữ bên trái, sáng dần về phía người mẫu bên phải */
+  background: linear-gradient(90deg, rgba(21, 30, 17, .55), rgba(21, 30, 17, .32) 45%, rgba(21, 30, 17, .12));
 }
 /* Hiện video từ 768px, khớp mốc matchMedia gán src trong script.js */
 @media (min-width: 768px) {
@@ -216,19 +217,26 @@ h1, h2, h3 { line-height: 1.15; }
 
 .hero__badge {
   display: inline-block; margin: 0 0 16px; padding: 7px 14px;
-  background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .4);
+  background: rgba(255, 255, 255, .22); border: 1px solid rgba(255, 255, 255, .4);
   border-radius: 999px; font-size: .85rem; font-weight: 600;
 }
 .hero__title {
-  font-family: var(--font-head); font-weight: 600; font-size: var(--fs-h1);
+  font-family: var(--font-head); font-weight: 700; font-size: var(--fs-h1);
   line-height: 1.04; margin: 0 0 .4em;
+  text-shadow: 0 1px 2px rgba(21, 30, 17, .35), 0 4px 24px rgba(21, 30, 17, .45);
 }
-.hero__sub { margin: 0 0 22px; color: rgba(255, 255, 255, .92); font-size: 1.02rem; max-width: 34em; }
+.hero__sub {
+  margin: 0 0 22px; color: rgba(255, 255, 255, .97); font-size: 1.02rem; max-width: 34em;
+  text-shadow: 0 1px 8px rgba(21, 30, 17, .35);
+}
 
 .hero__actions { display: flex; flex-direction: column; gap: 12px; }
 .hero__actions .btn { width: 100%; }   /* mobile: nút full-width */
 
-.hero__note { margin: 14px 0 0; font-size: .85rem; color: rgba(255, 255, 255, .88); }
+.hero__note {
+  margin: 14px 0 0; font-size: .85rem; color: rgba(255, 255, 255, .88);
+  text-shadow: 0 1px 8px rgba(21, 30, 17, .35);
+}
 
 /* Mobile: nền hero dùng ảnh DỌC riêng và gradient thay cho lớp overlay phẳng,
    chữ trắng vẫn rõ trên nền trời sáng mà ảnh không bị xỉn vì chồng 2 lớp.
@@ -439,7 +447,7 @@ h1, h2, h3 { line-height: 1.15; }
    ========================================================================= */
 @media (min-width: 769px) {
   :root {
-    --fs-h1: 3.4rem;       /* tiêu đề hero lớn hơn nhiều (~54px) */
+    --fs-h1: 3.8rem;       /* tiêu đề hero lớn hơn nhiều (~61px) */
     --fs-h2: 2.4rem;       /* tiêu đề section ~38px */
     --section-pad: 84px;   /* khoảng cách dọc rộng rãi hơn */
     --gutter: 40px;        /* lề ngang rộng hơn */
