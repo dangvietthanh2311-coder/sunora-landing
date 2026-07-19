@@ -33,10 +33,6 @@
         <span class="brand__name">Sunora</span>
       </a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false" aria-controls="primaryNav">
-        <span class="nav-toggle__bars" aria-hidden="true"></span>
-      </button>
-
       <nav class="primary-nav" id="primaryNav" aria-label="Điều hướng chính">
         <ul class="primary-nav__list">
           <li><a href="#home">Trang chủ</a></li>
@@ -45,8 +41,18 @@
           <li><a href="#luoi-san-pham">Sản phẩm</a></li>
           <li><a href="#lien-he">Liên hệ</a></li>
         </ul>
-        <a class="btn btn--primary primary-nav__cta" href="https://shopee.vn/shop/666029920" target="_blank" rel="noopener">Mua ngay trên Shopee</a>
+        <a class="btn btn--primary primary-nav__cta" href="#luoi-san-pham">Đặt hàng ngay</a>
       </nav>
+
+      <div class="site-header__actions">
+        <button type="button" class="cart-btn" id="cartBtn" aria-label="Giỏ hàng" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 12a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M8.5 10V6.5a3.5 3.5 0 0 1 7 0V10"/></svg>
+          <span class="cart-btn__badge" id="cartBadge" hidden>0</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false" aria-controls="primaryNav">
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -65,7 +71,7 @@
           <h1 class="hero__title">Nắng cháy da,<br>đã có Sunora</h1>
           <p class="hero__sub">Vải Sun Ice Silk mát lạnh,<span class="hero__sub-line2"> chống tia UV SPF 50+.</span><span class="hero__sub-more"> Bảo vệ làn da, giữ trọn phong cách mỗi ngày.</span></p>
           <div class="hero__actions">
-            <a class="btn btn--light btn--lg" href="https://shopee.vn/shop/666029920" target="_blank" rel="noopener">Mua ngay trên Shopee</a>
+            <a class="btn btn--light btn--lg" href="#luoi-san-pham">Mua ngay</a>
             <a class="btn btn--ghost btn--lg" href="#san-pham">Xem bộ sưu tập</a>
           </div>
           <p class="hero__note">Giá chỉ từ 36.000đ, đổi trả miễn phí 15 ngày</p>
@@ -198,14 +204,18 @@
         <div class="products__grid">
 
           <!-- Card 1: S1001 -->
-          <article class="product">
+          <article class="product" data-sku="S1001" data-name="Áo khoác chống nắng nữ Sunora Ice Silk" data-price="305000" data-sizes="S,M,L,XL">
             <div class="product__media">
-              <img class="product__img" id="p1-img" src="assets/s1001-xanh-duong.png" width="1247" height="1261"
+              <img class="product__img" id="p1-img" src="assets/s1001-xanh-duong.png" width="1247" height="1261" data-color="Xanh dương"
                    alt="Áo khoác chống nắng nữ Sunora Ice Silk màu xanh dương" loading="lazy" decoding="async">
             </div>
             <div class="product__body">
               <h3 class="product__name">Áo khoác chống nắng nữ Sunora Ice Silk</h3>
-              <p class="product__size">Size: S, M, L, XL</p>
+              <label class="product__size product__size--select">Size
+                <select class="product__size-select" aria-label="Chọn size áo khoác nữ">
+                  <option>S</option><option>M</option><option>L</option><option>XL</option>
+                </select>
+              </label>
               <div class="thumbs" role="group" aria-label="Chọn màu áo khoác nữ">
                 <button type="button" class="thumb is-active" data-target="p1-img" data-img="assets/s1001-xanh-duong.png" data-alt="Áo khoác chống nắng nữ Sunora Ice Silk màu xanh dương" aria-label="Màu Xanh dương" aria-pressed="true"><img src="assets/s1001-xanh-duong.png" alt="" loading="lazy"></button>
                 <button type="button" class="thumb" data-target="p1-img" data-img="assets/s1001-xanh-la.png" data-alt="Áo khoác chống nắng nữ Sunora Ice Silk màu xanh lá" aria-label="Màu Xanh lá" aria-pressed="false"><img src="assets/s1001-xanh-la.png" alt="" loading="lazy"></button>
@@ -214,44 +224,55 @@
                 <button type="button" class="thumb" data-target="p1-img" data-img="assets/s1001-be.png" data-alt="Áo khoác chống nắng nữ Sunora Ice Silk màu be" aria-label="Màu Be" aria-pressed="false"><img src="assets/s1001-be.png" alt="" loading="lazy"></button>
               </div>
               <p class="price"><span class="price__now">305.000đ</span></p>
-              <a class="btn btn--primary btn--block" href="https://shopee.vn/%C3%81o-kho%C3%A1c-ch%E1%BB%91ng-n%E1%BA%AFng-n%E1%BB%AF-SUNORA-Sun-Ice-Silk-si%C3%AAu-m%C3%A1t-l%E1%BA%A1nh-tho%C3%A1ng-kh%C3%AD-th%E1%BB%9Di-trang-S1001-i.666029920.53611933000?extraParams=%7B%22display_model_id%22%3A411037624877%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Mua trên Shopee</a>
+              <button type="button" class="btn btn--primary btn--block add-to-cart">Thêm vào giỏ</button>
+              <a class="product__shopee-link" href="https://shopee.vn/%C3%81o-kho%C3%A1c-ch%E1%BB%91ng-n%E1%BA%AFng-n%E1%BB%AF-SUNORA-Sun-Ice-Silk-si%C3%AAu-m%C3%A1t-l%E1%BA%A1nh-tho%C3%A1ng-kh%C3%AD-th%E1%BB%9Di-trang-S1001-i.666029920.53611933000?extraParams=%7B%22display_model_id%22%3A411037624877%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Xem trên Shopee</a>
             </div>
           </article>
 
           <!-- Card 2: S1002 -->
-          <article class="product">
+          <article class="product" data-sku="S1002" data-name="Áo chống nắng unisex Sunora có mũ trùm" data-price="349100" data-sizes="S,M,L,XL,2XL">
             <div class="product__media">
-              <img class="product__img" id="p2-img" src="assets/s1002-den.png" width="1086" height="1448"
+              <img class="product__img" id="p2-img" src="assets/s1002-den.png" width="1086" height="1448" data-color="Đen"
                    alt="Áo chống nắng unisex Sunora có mũ trùm màu đen" loading="lazy" decoding="async">
             </div>
             <div class="product__body">
               <h3 class="product__name">Áo chống nắng unisex Sunora có mũ trùm</h3>
-              <p class="product__size">Size: S, M, L, XL, 2XL</p>
+              <label class="product__size product__size--select">Size
+                <select class="product__size-select" aria-label="Chọn size áo unisex">
+                  <option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option>
+                </select>
+              </label>
               <div class="thumbs" role="group" aria-label="Chọn màu áo unisex">
                 <button type="button" class="thumb is-active" data-target="p2-img" data-img="assets/s1002-den.png" data-alt="Áo chống nắng unisex Sunora có mũ trùm màu đen" aria-label="Màu Đen" aria-pressed="true"><img src="assets/s1002-den.png" alt="" loading="lazy"></button>
                 <button type="button" class="thumb" data-target="p2-img" data-img="assets/s1002-xam.png" data-alt="Áo chống nắng unisex Sunora có mũ trùm màu xám đậm" aria-label="Màu Xám đậm" aria-pressed="false"><img src="assets/s1002-xam.png" alt="" loading="lazy"></button>
                 <button type="button" class="thumb thumb--detail" data-target="p2-img" data-img="assets/s1002-den-flatlay.png" data-alt="Áo chống nắng unisex Sunora màu đen chụp trải phẳng" aria-label="Ảnh trải phẳng" aria-pressed="false"><img src="assets/s1002-den-flatlay.png" alt="" loading="lazy"></button>
               </div>
               <p class="price"><span class="price__now">349.100đ</span></p>
-              <a class="btn btn--primary btn--block" href="https://shopee.vn/%C3%81o-ch%E1%BB%91ng-n%E1%BA%AFng-%C4%91a-n%C4%83ng-Unisex-SUNORA-c%C3%B3-m%C5%A9-tr%C3%B9m-k%C3%ADn-m%E1%BA%B7t-ch%E1%BB%91ng-tia-UV-v%E1%BA%A3i-tho%C3%A1ng-kh%C3%AD-th%E1%BB%9Di-trang-S1002-i.666029920.45011953763?extraParams=%7B%22display_model_id%22%3A366037905629%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Mua trên Shopee</a>
+              <button type="button" class="btn btn--primary btn--block add-to-cart">Thêm vào giỏ</button>
+              <a class="product__shopee-link" href="https://shopee.vn/%C3%81o-ch%E1%BB%91ng-n%E1%BA%AFng-%C4%91a-n%C4%83ng-Unisex-SUNORA-c%C3%B3-m%C5%A9-tr%C3%B9m-k%C3%ADn-m%E1%BA%B7t-ch%E1%BB%91ng-tia-UV-v%E1%BA%A3i-tho%C3%A1ng-kh%C3%AD-th%E1%BB%9Di-trang-S1002-i.666029920.45011953763?extraParams=%7B%22display_model_id%22%3A366037905629%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Xem trên Shopee</a>
             </div>
           </article>
 
           <!-- Card 4: S1004 -->
-          <article class="product">
+          <article class="product" data-sku="S1004" data-name="Áo khoác chống nắng dáng dài Sunora Ice Silk" data-price="439100" data-sizes="S,M,L,XL">
             <div class="product__media">
-              <img class="product__img" id="p4-img" src="assets/s1004-xam.jpg"
+              <img class="product__img" id="p4-img" src="assets/s1004-xam.jpg" data-color="Xám"
                    alt="Áo khoác chống nắng dáng dài Sunora Ice Silk màu xám" loading="lazy" decoding="async">
             </div>
             <div class="product__body">
               <h3 class="product__name">Áo khoác chống nắng dáng dài Sunora Ice Silk</h3>
-              <p class="product__size">Size: S, M, L, XL</p>
+              <label class="product__size product__size--select">Size
+                <select class="product__size-select" aria-label="Chọn size áo khoác dáng dài">
+                  <option>S</option><option>M</option><option>L</option><option>XL</option>
+                </select>
+              </label>
               <div class="thumbs" role="group" aria-label="Chọn màu áo khoác dáng dài">
                 <button type="button" class="thumb is-active" data-target="p4-img" data-img="assets/s1004-xam.jpg" data-alt="Áo khoác chống nắng dáng dài Sunora Ice Silk màu xám" aria-label="Màu Xám" aria-pressed="true"><img src="assets/s1004-xam.jpg" alt="" loading="lazy"></button>
                 <button type="button" class="thumb" data-target="p4-img" data-img="assets/s1004-nau-nhat.jpg" data-alt="Áo khoác chống nắng dáng dài Sunora Ice Silk màu nâu nhạt" aria-label="Màu Nâu nhạt" aria-pressed="false"><img src="assets/s1004-nau-nhat.jpg" alt="" loading="lazy"></button>
               </div>
               <p class="price"><span class="price__now">439.100đ</span></p>
-              <a class="btn btn--primary btn--block" href="https://shopee.vn/%C3%81o-kho%C3%A1c-ch%E1%BB%91ng-n%E1%BA%AFng-N%E1%BB%AF-c%C3%B3-t%C3%BAi-h%E1%BB%99p-ch%E1%BB%91ng-tia-UV-SUNORA-Sun-Ice-Silk-d%C3%A1ng-d%C3%A0i-tho%C3%A1ng-m%C3%A1t-S1004-i.666029920.51112268284?extraParams=%7B%22display_model_id%22%3A386064837664%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Mua trên Shopee</a>
+              <button type="button" class="btn btn--primary btn--block add-to-cart">Thêm vào giỏ</button>
+              <a class="product__shopee-link" href="https://shopee.vn/%C3%81o-kho%C3%A1c-ch%E1%BB%91ng-n%E1%BA%AFng-N%E1%BB%AF-c%C3%B3-t%C3%BAi-h%E1%BB%99p-ch%E1%BB%91ng-tia-UV-SUNORA-Sun-Ice-Silk-d%C3%A1ng-d%C3%A0i-tho%C3%A1ng-m%C3%A1t-S1004-i.666029920.51112268284?extraParams=%7B%22display_model_id%22%3A386064837664%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Xem trên Shopee</a>
             </div>
           </article>
 
@@ -261,9 +282,9 @@
         <div class="products__grid">
 
           <!-- Card 3: S1003 -->
-          <article class="product">
+          <article class="product" data-sku="S1003" data-name="Găng tay chống nắng cảm ứng Sunora" data-price="72000" data-sizes="Một cỡ">
             <div class="product__media">
-              <img class="product__img" id="p3-img" src="assets/s1003-hong.png" width="1000" height="1000"
+              <img class="product__img" id="p3-img" src="assets/s1003-hong.png" width="1000" height="1000" data-color="Hồng"
                    alt="Găng tay chống nắng cảm ứng Sunora màu hồng" loading="lazy" decoding="async">
             </div>
             <div class="product__body">
@@ -277,14 +298,15 @@
                 <button type="button" class="thumb thumb--detail" data-target="p3-img" data-img="assets/detail-chong-truot.png" data-alt="Lòng bàn tay găng Sunora có hạt silicon chống trượt" aria-label="Lòng bàn tay chống trượt" aria-pressed="false"><img src="assets/detail-chong-truot.png" alt="" loading="lazy"></button>
               </div>
               <p class="price"><span class="price__now">72.000đ</span> <span class="price__old">80.000đ</span></p>
-              <a class="btn btn--primary btn--block" href="https://shopee.vn/G%C4%83ng-tay-ch%E1%BB%91ng-n%E1%BA%AFng-n%E1%BB%AF-SUNORA-m%E1%BB%81m-m%E1%BA%A1i-%C3%AAm-%C3%A1i-tho%C3%A1ng-kh%C3%AD-S1003-i.666029920.55162056864?extraParams=%7B%22display_model_id%22%3A371047879851%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Mua trên Shopee</a>
+              <button type="button" class="btn btn--primary btn--block add-to-cart">Thêm vào giỏ</button>
+              <a class="product__shopee-link" href="https://shopee.vn/G%C4%83ng-tay-ch%E1%BB%91ng-n%E1%BA%AFng-n%E1%BB%AF-SUNORA-m%E1%BB%81m-m%E1%BA%A1i-%C3%AAm-%C3%A1i-tho%C3%A1ng-kh%C3%AD-S1003-i.666029920.55162056864?extraParams=%7B%22display_model_id%22%3A371047879851%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Xem trên Shopee</a>
             </div>
           </article>
 
           <!-- Card 6: S1006 -->
-          <article class="product">
+          <article class="product" data-sku="S1006" data-name="Găng tay chống nắng dáng dài Sunora" data-price="57600" data-sizes="Một cỡ">
             <div class="product__media">
-              <img class="product__img" id="p6-img" src="assets/s1006-den.png" width="1200" height="1200"
+              <img class="product__img" id="p6-img" src="assets/s1006-den.png" width="1200" height="1200" data-color="Đen"
                    alt="Găng tay chống nắng Sunora dáng dài màu đen" loading="lazy" decoding="async">
             </div>
             <div class="product__body">
@@ -296,14 +318,15 @@
                 <button type="button" class="thumb" data-target="p6-img" data-img="assets/s1006-xam.png" data-alt="Găng tay chống nắng Sunora dáng dài màu xám" aria-label="Màu Xám" aria-pressed="false"><img src="assets/s1006-xam.png" alt="" loading="lazy"></button>
               </div>
               <p class="price"><span class="price__now">57.600đ</span> <span class="price__old">80.000đ</span></p>
-              <a class="btn btn--primary btn--block" href="https://shopee.vn/Găng-tay-chống-nắng-Sunora-dáng-dài-mềm-mại-êm-ái-S1006-i.666029920.50562803070" target="_blank" rel="noopener">Mua trên Shopee</a>
+              <button type="button" class="btn btn--primary btn--block add-to-cart">Thêm vào giỏ</button>
+              <a class="product__shopee-link" href="https://shopee.vn/Găng-tay-chống-nắng-Sunora-dáng-dài-mềm-mại-êm-ái-S1006-i.666029920.50562803070" target="_blank" rel="noopener">Xem trên Shopee</a>
             </div>
           </article>
 
           <!-- Card 5: S1005 -->
-          <article class="product">
+          <article class="product" data-sku="S1005" data-name="Khẩu trang chống nắng Sunora Ice Silk" data-price="36000" data-sizes="Một cỡ">
             <div class="product__media">
-              <img class="product__img" id="p5-img" src="assets/s1005-xam.png"
+              <img class="product__img" id="p5-img" src="assets/s1005-xam.png" data-color="Xám"
                    alt="Khẩu trang chống nắng Sunora Ice Silk màu xám" loading="lazy" decoding="async">
             </div>
             <div class="product__body">
@@ -316,7 +339,8 @@
                 <button type="button" class="thumb" data-target="p5-img" data-img="assets/s1005-trang.png" data-alt="Khẩu trang chống nắng Sunora Ice Silk màu trắng" aria-label="Màu Trắng" aria-pressed="false"><img src="assets/s1005-trang.png" alt="" loading="lazy"></button>
               </div>
               <p class="price"><span class="price__now">36.000đ</span> <span class="price__old">40.000đ</span></p>
-              <a class="btn btn--primary btn--block" href="https://shopee.vn/Kh%E1%BA%A9u-trang-ch%E1%BB%91ng-n%E1%BA%AFng-Unisex-SUNORA-m%E1%BB%81m-m%E1%BA%A1i-%C3%AAm-%C3%A1i-tho%C3%A1ng-kh%C3%AD-S1005-i.666029920.42781736935?extraParams=%7B%22display_model_id%22%3A287700690695%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Mua trên Shopee</a>
+              <button type="button" class="btn btn--primary btn--block add-to-cart">Thêm vào giỏ</button>
+              <a class="product__shopee-link" href="https://shopee.vn/Kh%E1%BA%A9u-trang-ch%E1%BB%91ng-n%E1%BA%AFng-Unisex-SUNORA-m%E1%BB%81m-m%E1%BA%A1i-%C3%AAm-%C3%A1i-tho%C3%A1ng-kh%C3%AD-S1005-i.666029920.42781736935?extraParams=%7B%22display_model_id%22%3A287700690695%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Xem trên Shopee</a>
             </div>
           </article>
 
@@ -343,7 +367,7 @@
               <span>Giá từ 36.000đ, freeship toàn shop, đổi trả miễn phí 15 ngày.</span>
             </li>
           </ul>
-          <a class="btn btn--primary" href="https://shopee.vn/shop/666029920" target="_blank" rel="noopener">Mua ngay trên Shopee</a>
+          <a class="btn btn--primary" href="#luoi-san-pham">Đặt hàng ngay</a>
         </div>
         <div class="why__media">
           <img src="assets/vp-ao-cutout.png" alt="Áo khoác chống nắng Sunora" width="602" height="1190" loading="lazy" decoding="async">
@@ -384,8 +408,11 @@
     <section class="final-cta">
       <div class="container final-cta__inner">
         <h2 class="final-cta__title">Đừng để nắng làm phiền làn da bạn</h2>
-        <p class="final-cta__sub">Freeship 0đ, đổi trả 15 ngày, ưu đãi đang chờ trên Shopee.</p>
-        <a class="btn btn--light btn--lg" href="https://shopee.vn/shop/666029920" target="_blank" rel="noopener">Mua ngay trên Shopee</a>
+        <p class="final-cta__sub">Freeship 0đ, đổi trả 15 ngày. Đặt tại trang hoặc mua trên Shopee đều được.</p>
+        <div class="final-cta__actions">
+          <a class="btn btn--light btn--lg" href="#luoi-san-pham">Đặt hàng ngay</a>
+          <a class="btn btn--ghost btn--lg" href="https://shopee.vn/shop/666029920" target="_blank" rel="noopener">Mua trên Shopee</a>
+        </div>
       </div>
     </section>
 
@@ -433,6 +460,7 @@
   </footer>
 
   <script src="script.js" defer></script>
+  <script src="cart.js" defer></script>
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>

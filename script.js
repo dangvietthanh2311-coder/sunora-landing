@@ -65,6 +65,11 @@
       if (newSrc) main.src = newSrc;
       if (newAlt) main.alt = newAlt;
 
+      /* Cập nhật màu đang chọn cho giỏ hàng (bỏ qua thumb ảnh chi tiết) */
+      if (!btn.classList.contains("thumb--detail")) {
+        main.dataset.color = (btn.getAttribute("aria-label") || "").replace(/^Màu /, "");
+      }
+
       /* Cập nhật trạng thái active trong cùng nhóm swatch của card */
       var group = btn.closest(".thumbs");
       if (group) {

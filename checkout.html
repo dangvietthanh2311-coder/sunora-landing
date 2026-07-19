@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunora | Đặt hàng</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#32482C">
+
+  <link rel="icon" type="image/png" href="assets/sunora-logo-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Cormorant:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="checkout-page">
+
+  <header class="checkout-header">
+    <div class="container checkout-header__inner">
+      <a class="brand" href="index.html" aria-label="Sunora, về trang chủ">
+        <img src="assets/sunora-logo-icon.png" alt="" aria-hidden="true" class="brand__icon" width="180" height="176">
+        <span class="brand__name">Sunora</span>
+      </a>
+      <a class="checkout-header__back" href="index.html#luoi-san-pham">Tiếp tục mua sắm</a>
+    </div>
+  </header>
+
+  <main class="checkout container">
+    <h1 class="checkout__title">Đặt hàng</h1>
+
+    <div class="checkout__grid" id="checkoutGrid">
+
+      <aside class="checkout__summary" aria-label="Tóm tắt đơn hàng">
+        <h2>Đơn hàng của bạn</h2>
+        <p class="checkout__code">Mã đơn: <strong id="orderCode"></strong></p>
+        <div id="summaryItems"></div>
+        <div class="checkout__totals">
+          <p><span>Tạm tính</span><span id="sumSubtotal"></span></p>
+          <p><span>Phí vận chuyển</span><span>0đ</span></p>
+          <p class="checkout__grand"><span>Tổng cộng</span><strong id="sumTotal"></strong></p>
+        </div>
+      </aside>
+
+      <form class="checkout__form" id="checkoutForm" novalidate>
+        <h2>Thông tin nhận hàng</h2>
+
+        <div class="form-field">
+          <label for="fName">Họ và tên *</label>
+          <input id="fName" name="name" type="text" autocomplete="name">
+          <p class="form-error" id="errName" hidden></p>
+        </div>
+
+        <div class="form-field">
+          <label for="fPhone">Số điện thoại *</label>
+          <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
+          <p class="form-error" id="errPhone" hidden></p>
+        </div>
+
+        <div class="form-field">
+          <label for="fAddress">Địa chỉ nhận hàng *</label>
+          <textarea id="fAddress" name="address" autocomplete="street-address"></textarea>
+          <p class="form-error" id="errAddress" hidden></p>
+        </div>
+
+        <div class="form-field">
+          <label for="fNote">Ghi chú</label>
+          <textarea id="fNote" name="note" placeholder="Ví dụ: giao giờ hành chính"></textarea>
+        </div>
+
+        <fieldset class="form-pay">
+          <legend>Phương thức thanh toán</legend>
+          <label class="form-radio"><input type="radio" name="payment" value="COD" checked> Thanh toán khi nhận hàng (COD)</label>
+          <label class="form-radio"><input type="radio" name="payment" value="Chuyển khoản"> Chuyển khoản ngân hàng</label>
+        </fieldset>
+
+        <div class="checkout__qr" id="qrBlock" hidden>
+          <img id="qrImg" alt="Mã VietQR thanh toán đơn hàng Sunora" loading="lazy">
+          <p>TPBank, số tài khoản <strong>00000806592</strong>, chủ tài khoản <strong>LE QUY AN DUC</strong>.<br>
+             Nội dung chuyển khoản: <strong id="qrAddInfo"></strong></p>
+          <p class="checkout__qr-note">Quét QR bằng app ngân hàng, số tiền và nội dung đã điền sẵn. Chuyển xong bấm Đặt hàng, Sunora xác nhận ngay khi nhận được.</p>
+        </div>
+
+        <p class="hp-field" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
+
+        <p class="form-error form-error--global" id="formMsg" hidden></p>
+        <button type="submit" class="btn btn--primary btn--block" id="payBtn">Đặt hàng</button>
+      </form>
+
+    </div>
+
+    <section class="checkout__empty" id="emptyCheckout" hidden>
+      <p>Giỏ hàng đang trống. Chọn món đầu tiên của bạn nhé.</p>
+      <a class="btn btn--primary" href="index.html#luoi-san-pham">Xem sản phẩm</a>
+    </section>
+
+    <section class="checkout__thanks" id="thankYou" hidden>
+      <h2>Sunora đã nhận đơn của bạn</h2>
+      <p class="checkout__thanks-code">Mã đơn: <strong id="tyCode"></strong></p>
+      <p id="tyPayNote"></p>
+      <p>Cần hỗ trợ nhanh: <a href="tel:+84363689459">0363 689 459</a></p>
+      <a class="btn btn--primary" href="index.html">Về trang chủ</a>
+    </section>
+
+  </main>
+
+  <script src="cart.js" defer></script>
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
