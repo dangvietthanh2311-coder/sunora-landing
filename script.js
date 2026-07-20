@@ -98,4 +98,79 @@
     var playAttempt = heroVideo.play();
     if (playAttempt && playAttempt.catch) playAttempt.catch(function () {});
   }
+
+  /* ---------- 5. Tiện ích campaign: đếm ngược flash sale + dải UV ---------- */
+  /* Flash sale theo khung Shopee: 12h và 20h hằng ngày, mỗi khung kéo dài 2 giờ. */
+  var cdBox = document.getElementById("saleCountdown");
+  if (cdBox) {
+    var cdLabel = document.getElementById("saleCountdownLabel");
+    var cdTimer = document.getElementById("saleCountdownTimer");
+    var cdVoucher = document.getElementById("saleCountdownVoucher");
+    var SLOTS = [12, 20];
+    var SLOT_HOURS = 2;
+    var VOUCHER_END = new Date(2026, 6, 31, 23, 59, 59);
+
+    /* Hàm thuần: trạng thái flash sale tại một thời điểm bất kỳ */
+    function slotState(now) {
+      for (var i = 0; i < SLOTS.length; i++) {
+        var start = new Date(now); start.setHours(SLOTS[i], 0, 0, 0);
+        var end = new Date(start.getTime() + SLOT_HOURS * 3600000);
+        if (now >= start && now < end) {
+          return { live: true, target: end, label: "Flash sale đang diễn ra, kết thúc sau" };
+        }
+        if (now < start) {
+          return { live: false, target: start, label: "Flash sale " + SLOTS[i] + "h hôm nay bắt đầu sau" };
+        }
+      }
+      var t = new Date(now); t.setDate(t.getDate() + 1); t.setHours(SLOTS[0], 0, 0, 0);
+      return { live: false, target: t, label: "Flash sale " + SLOTS[0] + "h trưa mai bắt đầu sau" };
+    }
+    window.__slotState = slotState; /* lộ ra cho kiểm thử render, vô hại */
+
+    function two(n) { return (n < 10 ? "0" : "") + n; }
+    function cdTick() {
+      var now = new Date();
+      var st = slotState(now);
+      var ms = Math.max(0, st.target - now);
+      cdLabel.textContent = st.label;
+      cdTimer.textContent = two(Math.floor(ms / 3600000)) + ":" +
+        two(Math.floor(ms % 3600000 / 60000)) + ":" + two(Math.floor(ms % 60000 / 1000));
+      cdBox.classList.toggle("is-live", st.live);
+      if (cdVoucher) cdVoucher.hidden = now > VOUCHER_END;
+      cdBox.hidden = false;
+    }
+    cdTick();
+    setInterval(cdTick, 1000);
+  }
+
+  /* Dải UV trực tiếp cho Hà Nội và TP.HCM qua open-meteo (không cần key).
+     API lỗi thì dải giữ nguyên trạng thái ẩn, trang không ảnh hưởng. */
+  var uvStrip = document.getElementById("uvStrip");
+  if (uvStrip && window.fetch) {
+    var uvLevel = function (v) {
+      if (v < 3) return ["Thấp", "#7CB342"];
+      if (v < 6) return ["Trung bình", "#F9A825"];
+      if (v < 8) return ["Cao", "#EF6C00"];
+      if (v < 11) return ["Rất cao", "#C62828"];
+      return ["Cực đại", "#6A1B9A"];
+    };
+    var uvFill = function (el, city, v) {
+      if (!el || v == null) return;
+      var lv = uvLevel(v);
+      el.innerHTML = city + ' <b class="uv-chip" style="background:' + lv[1] + '">' +
+        (Math.round(v * 10) / 10) + " " + lv[0] + "</b>";
+    };
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=21.0285,10.7769&longitude=105.8542,106.7009&current=uv_index&timezone=Asia%2FBangkok")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var list = Array.isArray(data) ? data : [data];
+        var hn = list[0] && list[0].current ? list[0].current.uv_index : null;
+        var sg = list[1] && list[1].current ? list[1].current.uv_index : null;
+        if (hn == null && sg == null) return;
+        uvFill(document.getElementById("uvHanoi"), "Hà Nội", hn);
+        uvFill(document.getElementById("uvHcm"), "TP.HCM", sg);
+        uvStrip.hidden = false;
+      })
+      .catch(function () {});
+  }
 })();

@@ -79,6 +79,16 @@
       </div>
     </section>
 
+    <!-- Dải chỉ số UV trực tiếp (script.js đổ dữ liệu, ẩn nếu API lỗi) -->
+    <div class="uv-strip" id="uvStrip" hidden>
+      <div class="container uv-strip__inner">
+        <span class="uv-strip__label">Chỉ số UV lúc này</span>
+        <span class="uv-strip__city" id="uvHanoi"></span>
+        <span class="uv-strip__city" id="uvHcm"></span>
+        <span class="uv-strip__note">Từ mức 3 trở lên, làn da cần được che chắn khi ra đường.</span>
+      </div>
+    </div>
+
     <!-- 5.3 Vấn đề -->
     <section class="section problems">
       <div class="container">
@@ -199,6 +209,13 @@
           <li>Hoàn đến 15.000đ nếu giao trễ</li>
           <li>Đổi trả miễn phí 15 ngày</li>
         </ul>
+
+        <!-- Đếm ngược flash sale, khớp khung giờ Shopee 12h và 20h hằng ngày -->
+        <div class="sale-countdown" id="saleCountdown" hidden>
+          <p class="sale-countdown__label" id="saleCountdownLabel"></p>
+          <p class="sale-countdown__timer" id="saleCountdownTimer">00:00:00</p>
+          <p class="sale-countdown__voucher" id="saleCountdownVoucher">Voucher toàn shop 10% áp dụng đến hết 31/7</p>
+        </div>
 
         <h3 class="products__group-title" id="luoi-san-pham">Áo chống nắng</h3>
         <div class="products__grid">
