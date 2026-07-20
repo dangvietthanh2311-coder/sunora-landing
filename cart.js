@@ -33,6 +33,24 @@ const BANK = { bin: "970423", bankName: "TPBank", account: "00000806592", accoun
     return it.color ? it.color + " / " + it.size : it.size;
   }
 
+  /* ---------- 1b. Ghi nhớ nguồn UTM để gắn vào đơn và lead ---------- */
+  /* Khách vào từ link quảng cáo có utm_* thì nguồn được nhớ trong tab
+     (sessionStorage) và gắn vào phần ghi chú khi gửi đơn hoặc lead. */
+  var UTM_KEY = "sunora_utm";
+  try {
+    var utmParams = new URLSearchParams(location.search);
+    var utmParts = ["utm_source", "utm_medium", "utm_campaign"]
+      .map(function (k) { return utmParams.get(k); })
+      .filter(Boolean);
+    if (utmParts.length) sessionStorage.setItem(UTM_KEY, utmParts.join(" / "));
+  } catch (e) {}
+  function utmNote() {
+    try {
+      var u = sessionStorage.getItem(UTM_KEY);
+      return u ? "Nguồn: " + u : "";
+    } catch (e) { return ""; }
+  }
+
   /* ---------- 2. Badge số lượng trên nút giỏ ---------- */
   var badge = document.getElementById("cartBadge");
   function renderBadge(items) {
@@ -222,7 +240,7 @@ const BANK = { bin: "970423", bankName: "TPBank", account: "00000806592", accoun
           name: name,
           phone: phone,
           address: "Đăng ký nhận tư vấn size và ưu đãi từ landing page",
-          note: "Khách đã tick đồng ý nhận liên hệ",
+          note: ["Khách đã tick đồng ý nhận liên hệ", utmNote()].filter(Boolean).join(" | "),
           payment: "Đăng ký tư vấn",
           total: "0đ",
           items: [{ name: "Lead từ form cuối trang", variant: "Tư vấn size", qty: 1, lineTotal: "0đ" }],
@@ -377,7 +395,7 @@ const BANK = { bin: "970423", bankName: "TPBank", account: "00000806592", accoun
       name: els.name.value.trim(),
       phone: els.phone.value.trim(),
       address: els.address.value.trim(),
-      note: (els.note && els.note.value || "").trim(),
+      note: [(els.note && els.note.value || "").trim(), utmNote()].filter(Boolean).join(" | "),
       payment: payment,
       total: fmtVND(total),
       items: current.map(function (it) {

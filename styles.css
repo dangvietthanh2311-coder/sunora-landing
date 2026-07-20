@@ -742,3 +742,10 @@ h1, h2, h3 { line-height: 1.15; }
 @media (min-width: 769px) {
   .lead__row { grid-template-columns: 1.2fr 1fr auto; }
 }
+
+/* Key message của campaign đặt trên tiêu đề khối value proposition */
+.why__eyebrow {
+  margin: 0 0 8px; color: var(--blue-dark);
+  font-size: .82rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+}
