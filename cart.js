@@ -189,6 +189,65 @@ const BANK = { bin: "970423", bankName: "TPBank", account: "00000806592", accoun
 
   renderBadge(loadCart());
 
+  /* ---------- 4b. Form đăng ký tư vấn trên trang chủ ---------- */
+  /* Gửi về cùng endpoint nhận đơn theo đúng schema hiện tại (payment "Đăng ký
+     tư vấn", tổng 0đ) nên chạy ngay không cần sửa Apps Script. Field type "lead"
+     gửi kèm để bản Apps Script nâng cấp sau này tách được sang tab Leads riêng. */
+  var leadForm = document.getElementById("leadForm");
+  if (leadForm) {
+    var leadBtn = document.getElementById("leadBtn");
+    var leadErr = document.getElementById("leadErr");
+    leadForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var nameEl = document.getElementById("leadName");
+      var phoneEl = document.getElementById("leadPhone");
+      var consent = document.getElementById("leadConsent");
+      var name = (nameEl && nameEl.value || "").trim();
+      var phone = (phoneEl && phoneEl.value || "").replace(/\s+/g, "");
+      var msg = "";
+      if (name.length < 2) msg = "Bạn nhập giúp Sunora họ và tên nhé.";
+      else if (!/^(0|\+?84)\d{8,10}$/.test(phone)) msg = "Số điện thoại chưa đúng, bạn kiểm tra lại giúp nhé.";
+      else if (!consent || !consent.checked) msg = "Bạn tick đồng ý để Sunora được phép liên hệ nhé.";
+      if (leadErr) { leadErr.textContent = msg; leadErr.hidden = !msg; }
+      if (msg) return;
+
+      var hp = leadForm.querySelector('input[name="website"]');
+      if (leadBtn) { leadBtn.disabled = true; leadBtn.textContent = "Đang gửi..."; }
+      fetch(ORDER_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          type: "lead",
+          code: "LEAD" + Date.now().toString(36).slice(-6).toUpperCase(),
+          name: name,
+          phone: phone,
+          address: "Đăng ký nhận tư vấn size và ưu đãi từ landing page",
+          note: "Khách đã tick đồng ý nhận liên hệ",
+          payment: "Đăng ký tư vấn",
+          total: "0đ",
+          items: [{ name: "Lead từ form cuối trang", variant: "Tư vấn size", qty: 1, lineTotal: "0đ" }],
+          website: (hp && hp.value) || ""
+        })
+      })
+        .then(function (r) { return r.text(); })
+        .then(function (t) {
+          var d = null;
+          try { d = JSON.parse(t); } catch (e) {}
+          if (!(d && d.ok)) throw new Error("not ok");
+          leadForm.hidden = true;
+          var done = document.getElementById("leadDone");
+          if (done) done.hidden = false;
+        })
+        .catch(function () {
+          if (leadErr) {
+            leadErr.textContent = "Gửi chưa thành công, bạn thử lại giúp Sunora nhé.";
+            leadErr.hidden = false;
+          }
+          if (leadBtn) { leadBtn.disabled = false; leadBtn.textContent = "Đăng ký nhận tư vấn"; }
+        });
+    });
+  }
+
   /* ---------- 5. Trang checkout ---------- */
   var form = document.getElementById("checkoutForm");
   if (!form) return; /* index.html dừng ở đây */

@@ -685,3 +685,60 @@ h1, h2, h3 { line-height: 1.15; }
 }
 .sale-countdown.is-live .sale-countdown__timer { color: #FFD54F; }
 .sale-countdown__voucher { margin: 6px 0 0; font-size: .85rem; color: rgba(249, 247, 242, .85); }
+
+/* =========================================================================
+   CTA HERO NỔI BẬT + QUIZ CHỌN ÁO + FORM TƯ VẤN
+   ========================================================================= */
+/* Nút CTA chính của hero: vàng nắng (token --star), nổi trên nền video tối */
+.btn--cta {
+  background: var(--star); color: #2C3327;
+  box-shadow: 0 10px 26px rgba(232, 179, 61, .38);
+}
+.btn--cta:hover {
+  background: #DBA22F; transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(232, 179, 61, .5);
+}
+.btn--cta svg { flex: 0 0 auto; }
+
+/* Quiz chọn áo */
+.quiz { background: var(--white); }
+.quiz__inner { max-width: 760px; margin-inline: auto; }
+.quiz__step { margin-top: 18px; }
+.quiz__question { font-weight: 700; color: var(--moss); margin: 0 0 10px; }
+.quiz__opts { display: flex; flex-wrap: wrap; gap: 10px; }
+.quiz__opt {
+  padding: 10px 16px; border-radius: 999px; border: 1.6px solid var(--line);
+  background: var(--cream); color: var(--ink); cursor: pointer;
+  font: inherit; font-size: .95rem; transition: background .15s, border-color .15s, color .15s;
+}
+.quiz__opt:hover { border-color: var(--moss); }
+.quiz__opt.is-picked { background: var(--moss); border-color: var(--moss); color: var(--cream); }
+.quiz__result { margin-top: 24px; background: var(--tint); border-radius: var(--radius); padding: 18px 20px; }
+.quiz__verdict { margin: 0 0 4px; font-size: 1.1rem; }
+.quiz__verdict strong { color: var(--moss); }
+.quiz__extra { margin: 0 0 12px; color: var(--muted); }
+.quiz__actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.quiz__reset {
+  background: none; border: 0; cursor: pointer; padding: 0;
+  color: var(--blue-dark); font: inherit; font-weight: 600; text-decoration: underline;
+}
+.product--spotlight { outline: 3px solid var(--star); outline-offset: 4px; }
+
+/* Form đăng ký tư vấn */
+.lead { background: var(--tint); }
+.lead__inner { max-width: 760px; margin-inline: auto; }
+.lead__row { display: grid; gap: 10px; }
+.lead__row input {
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
+  font: inherit; color: var(--ink); background: var(--white);
+}
+.lead__row input:focus { outline: 2px solid var(--moss); outline-offset: 1px; }
+.lead__consent {
+  display: flex; gap: 10px; align-items: flex-start; margin-top: 12px;
+  font-size: .88rem; color: var(--muted); cursor: pointer;
+}
+.lead__consent input { margin-top: 3px; flex: 0 0 auto; }
+.lead__done { color: var(--moss); font-weight: 600; margin: 8px 0 0; }
+@media (min-width: 769px) {
+  .lead__row { grid-template-columns: 1.2fr 1fr auto; }
+}
