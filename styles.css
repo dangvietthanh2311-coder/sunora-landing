@@ -724,15 +724,26 @@ h1, h2, h3 { line-height: 1.15; }
 }
 .product--spotlight { outline: 3px solid var(--star); outline-offset: 4px; }
 
-/* Form đăng ký tư vấn */
+/* Form đăng ký tư vấn: dải gọn giữa FAQ và CTA cuối, không cạnh tranh
+   với heading lớn của CTA nên dùng tiêu đề riêng cỡ nhỏ và đệm thấp */
 .lead { background: var(--tint); }
-.lead__inner { max-width: 760px; margin-inline: auto; }
+.lead.section { padding-block: 42px; }
+.lead__title {
+  font-family: var(--font-head); color: var(--moss); font-weight: 700;
+  font-size: 1.5rem; text-align: center; margin: 0 0 6px;
+}
+.lead__sub {
+  text-align: center; color: var(--muted); font-size: .95rem;
+  margin: 0 auto 18px; max-width: 34em;
+}
+.lead__inner { max-width: 720px; margin-inline: auto; }
 .lead__row { display: grid; gap: 10px; }
 .lead__row input {
   padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
   font: inherit; color: var(--ink); background: var(--white);
 }
 .lead__row input:focus { outline: 2px solid var(--moss); outline-offset: 1px; }
+.lead__row .btn { white-space: nowrap; }
 .lead__consent {
   display: flex; gap: 10px; align-items: flex-start; margin-top: 12px;
   font-size: .88rem; color: var(--muted); cursor: pointer;
