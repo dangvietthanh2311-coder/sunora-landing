@@ -700,30 +700,6 @@ h1, h2, h3 { line-height: 1.15; }
 }
 .btn--cta svg { flex: 0 0 auto; }
 
-/* Quiz chọn áo */
-.quiz { background: var(--white); }
-.quiz__inner { max-width: 760px; margin-inline: auto; }
-.quiz__step { margin-top: 18px; }
-.quiz__question { font-weight: 700; color: var(--moss); margin: 0 0 10px; }
-.quiz__opts { display: flex; flex-wrap: wrap; gap: 10px; }
-.quiz__opt {
-  padding: 10px 16px; border-radius: 999px; border: 1.6px solid var(--line);
-  background: var(--cream); color: var(--ink); cursor: pointer;
-  font: inherit; font-size: .95rem; transition: background .15s, border-color .15s, color .15s;
-}
-.quiz__opt:hover { border-color: var(--moss); }
-.quiz__opt.is-picked { background: var(--moss); border-color: var(--moss); color: var(--cream); }
-.quiz__result { margin-top: 24px; background: var(--tint); border-radius: var(--radius); padding: 18px 20px; }
-.quiz__verdict { margin: 0 0 4px; font-size: 1.1rem; }
-.quiz__verdict strong { color: var(--moss); }
-.quiz__extra { margin: 0 0 12px; color: var(--muted); }
-.quiz__actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.quiz__reset {
-  background: none; border: 0; cursor: pointer; padding: 0;
-  color: var(--blue-dark); font: inherit; font-weight: 600; text-decoration: underline;
-}
-.product--spotlight { outline: 3px solid var(--star); outline-offset: 4px; }
-
 /* Form đăng ký tư vấn: dải gọn giữa FAQ và CTA cuối, không cạnh tranh
    với heading lớn của CTA nên dùng tiêu đề riêng cỡ nhỏ và đệm thấp */
 .lead { background: var(--tint); }
